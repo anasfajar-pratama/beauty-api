@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Admin;
+use App\Models\ActivityLog;
 use App\Models\Product;
 use App\Models\Testimonial;
 use App\Models\HomepageContent;
@@ -24,13 +25,34 @@ class AuthController extends Controller
             return response()->json(['error' => 'Username atau password salah'], 401);
         }
 
+        if (! $admin->is_active) {
+            return response()->json(['error' => 'Akun Anda dinonaktifkan'], 403);
+        }
+
         // Delete old tokens and create a new one
         $admin->tokens()->delete();
         $token = $admin->createToken('admin-token')->plainTextToken;
 
+        // Update last login info
+        $admin->update([
+            'last_login_at' => now(),
+            'last_login_ip' => $request->ip(),
+        ]);
+
+        // Log login activity
+        ActivityLog::create([
+            'admin_id'   => $admin->id,
+            'action'     => 'login',
+            'description' => "Admin {$admin->username} login",
+            'ip_address' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+        ]);
+
         return response()->json([
             'token'    => $token,
             'username' => $admin->username,
+            'name'     => $admin->name,
+            'permissions' => $admin->roles->flatMap->permissions->pluck('slug')->unique()->values(),
         ]);
     }
 
@@ -43,16 +65,22 @@ class AuthController extends Controller
             return response()->json(['error' => 'Setup key tidak valid'], 403);
         }
 
-        // Check if already seeded
         if (Admin::count() > 0) {
             return response()->json(['error' => 'Data sudah pernah diinisialisasi sebelumnya. Silakan login.'], 409);
         }
 
         // Create admin
-        Admin::create([
+        $admin = Admin::create([
             'username' => 'admin',
+            'name' => 'Super Admin',
             'password' => Hash::make('lumiere2024'),
         ]);
+
+        // Assign super-admin role if exists
+        $superRole = \App\Models\Role::where('slug', 'super-admin')->first();
+        if ($superRole) {
+            $admin->roles()->attach($superRole->id);
+        }
 
         // Create sample products
         $products = [
@@ -68,7 +96,6 @@ class AuthController extends Controller
             Product::create($p);
         }
 
-        // Create sample testimonials
         $testimonials = [
             ['name' => 'Siti A.',  'content' => 'Kulit saya tidak pernah secerah ini. Serum glow-nya benar-benar bekerja!',                      'rating' => '5', 'is_active' => true],
             ['name' => 'Budi P.',  'content' => 'Produk pria sangat praktis. Tidak lengket dan menyegarkan setelah olahraga.',                   'rating' => '5', 'is_active' => true],
@@ -80,7 +107,6 @@ class AuthController extends Controller
             Testimonial::create($t);
         }
 
-        // Create default homepage content
         $contents = [
             'hero_title'            => 'Kecantikan untuk',
             'hero_title_highlight'  => 'Setiap Jiwa',
@@ -107,6 +133,19 @@ class AuthController extends Controller
         return response()->json([
             'products'     => Product::count(),
             'testimonials' => Testimonial::count(),
+        ]);
+    }
+
+    public function me(Request $request)
+    {
+        $admin = $request->user()->load('roles.permissions');
+        return response()->json([
+            'id' => $admin->id,
+            'username' => $admin->username,
+            'name' => $admin->name,
+            'email' => $admin->email,
+            'permissions' => $admin->roles->flatMap->permissions->pluck('slug')->unique()->values(),
+            'roles' => $admin->roles->pluck('slug'),
         ]);
     }
 }
