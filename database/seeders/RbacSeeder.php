@@ -53,6 +53,9 @@ class RbacSeeder extends Seeder
             ['name' => 'Hapus Pengaturan', 'slug' => 'delete_settings', 'group' => 'settings'],
 
             ['name' => 'Lihat Log Aktivitas', 'slug' => 'view_activity_logs', 'group' => 'activity_logs'],
+            ['name' => 'Lihat Brand', 'slug' => 'view_brands', 'group' => 'brands'],
+            ['name' => 'Edit Brand', 'slug' => 'edit_brands', 'group' => 'brands'],
+            ['name' => 'Lihat About', 'slug' => 'view_about', 'group' => 'about'],
             ['name' => 'Upload File', 'slug' => 'upload_files', 'group' => 'files'],
         ];
 
@@ -79,6 +82,7 @@ class RbacSeeder extends Seeder
             'delete_admins', 'delete_roles',
             'create_admins', 'edit_admins',
             'create_roles', 'edit_roles',
+            'delete_settings',
         ])->pluck('id');
         $adminRole->permissions()->sync($adminPerms);
 
@@ -105,7 +109,7 @@ class RbacSeeder extends Seeder
 
         // Default settings
         $defaultSettings = [
-            ['key' => 'site_name', 'value' => 'Lumière', 'type' => 'string', 'group' => 'general', 'description' => 'Nama website'],
+            ['key' => 'site_name', 'value' => 'Rindang Cemara Sukses', 'type' => 'string', 'group' => 'general', 'description' => 'Nama website'],
             ['key' => 'site_description', 'value' => 'Kecantikan untuk Setiap Jiwa', 'type' => 'text', 'group' => 'general', 'description' => 'Deskripsi website'],
             ['key' => 'site_logo', 'value' => '', 'type' => 'image', 'group' => 'general', 'description' => 'Logo website (URL)'],
             ['key' => 'seo_title', 'value' => 'Lumière - Kecantikan untuk Setiap Jiwa', 'type' => 'string', 'group' => 'seo', 'description' => 'SEO title default'],
@@ -115,7 +119,7 @@ class RbacSeeder extends Seeder
             ['key' => 'social_instagram', 'value' => '', 'type' => 'string', 'group' => 'social', 'description' => 'URL Instagram'],
             ['key' => 'social_twitter', 'value' => '', 'type' => 'string', 'group' => 'social', 'description' => 'URL Twitter / X'],
             ['key' => 'social_youtube', 'value' => '', 'type' => 'string', 'group' => 'social', 'description' => 'URL YouTube'],
-            ['key' => 'contact_email', 'value' => 'hello@lumiere.com', 'type' => 'string', 'group' => 'contact', 'description' => 'Email kontak'],
+            ['key' => 'contact_email', 'value' => 'hello@rindangcemarasukses.com', 'type' => 'string', 'group' => 'contact', 'description' => 'Email kontak'],
             ['key' => 'contact_phone', 'value' => '', 'type' => 'string', 'group' => 'contact', 'description' => 'Nomor telepon'],
             ['key' => 'contact_address', 'value' => '', 'type' => 'text', 'group' => 'contact', 'description' => 'Alamat lengkap'],
             ['key' => 'contact_map_url', 'value' => '', 'type' => 'string', 'group' => 'contact', 'description' => 'Google Maps embed URL'],
@@ -127,6 +131,23 @@ class RbacSeeder extends Seeder
             ['key' => 'logo_blisera', 'value' => '/logo/blisera - text bawah.png', 'type' => 'image', 'group' => 'brands', 'description' => 'Logo brand BLISERA (Wanita)'],
             ['key' => 'logo_pijar_nala', 'value' => '/logo/pijar nala - text bawah.png', 'type' => 'image', 'group' => 'brands', 'description' => 'Logo brand PIJAR NALA (Anak)'],
             ['key' => 'logo_fokka', 'value' => '', 'type' => 'image', 'group' => 'brands', 'description' => 'Logo brand FOKKA (Pria)'],
+            ['key' => 'hero_image_blisera', 'value' => '', 'type' => 'image', 'group' => 'brands', 'description' => 'Gambar hero slider BLISERA (Wanita)'],
+            ['key' => 'hero_image_pijar_nala', 'value' => '', 'type' => 'image', 'group' => 'brands', 'description' => 'Gambar hero slider PIJAR NALA (Anak)'],
+            ['key' => 'hero_image_fokka', 'value' => '', 'type' => 'image', 'group' => 'brands', 'description' => 'Gambar hero slider FOKKA (Pria)'],
+            ['key' => 'logo_style_blisera', 'value' => 'rounded', 'type' => 'string', 'group' => 'brands', 'description' => 'Bentuk logo: circle, rounded, atau square'],
+            ['key' => 'logo_style_pijar_nala', 'value' => 'rounded', 'type' => 'string', 'group' => 'brands', 'description' => 'Bentuk logo: circle, rounded, atau square'],
+            ['key' => 'logo_style_fokka', 'value' => 'rounded', 'type' => 'string', 'group' => 'brands', 'description' => 'Bentuk logo: circle, rounded, atau square'],
+
+            // Brand descriptions & taglines
+            ['key' => 'brand_blisera_tagline', 'value' => 'Elegansi untuk Setiap Momen', 'type' => 'string', 'group' => 'brands', 'description' => 'Tagline brand BLISERA'],
+            ['key' => 'brand_fokka_tagline', 'value' => 'Ketegasan dalam Gaya', 'type' => 'string', 'group' => 'brands', 'description' => 'Tagline brand FOKKA'],
+            ['key' => 'brand_pijar_nala_tagline', 'value' => 'Ceria dan Berkilau', 'type' => 'string', 'group' => 'brands', 'description' => 'Tagline brand PIJAR NALA'],
+            ['key' => 'brand_blisera_description', 'value' => 'BLISERA adalah rangkaian perawatan kulit premium yang dirancang khusus untuk wanita modern. Setiap produk menggabungkan bahan alami terbaik dengan teknologi mutakhir untuk menghasilkan kulit yang sehat, cerah, dan bercahaya.', 'type' => 'text', 'group' => 'brands', 'description' => 'Deskripsi brand BLISERA'],
+            ['key' => 'brand_fokka_description', 'value' => 'FOKKA hadir untuk pria tangguh yang menginginkan perawatan praktis tanpa ribet. Dengan formula menyegarkan dan kemasan travel-friendly, FOKKA adalah pilihan tepat untuk gaya hidup aktif.', 'type' => 'text', 'group' => 'brands', 'description' => 'Deskripsi brand FOKKA'],
+            ['key' => 'brand_pijar_nala_description', 'value' => 'PIJAR NALA lahir dari kepedulian terhadap kulit sensitif si kecil. Menggunakan bahan alami yang lembut dan aman, PIJAR NALA menjadikan waktu perawatan sebagai momen bermain yang menyenangkan.', 'type' => 'text', 'group' => 'brands', 'description' => 'Deskripsi brand PIJAR NALA'],
+            ['key' => 'brand_blisera_about', 'value' => 'BLISERA percaya bahwa setiap wanita berhak tampil percaya diri dengan kulit yang sehat. Kami menghadirkan rangkaian perawatan yang terinspirasi dari ritual kecantikan klasik yang dipadukan dengan inovasi modern. Dari serum pencerah hingga pelembap intensif, setiap produk BLISERA dirancang dengan cinta dan ketelitian untuk memberikan pengalaman mewah setiap hari.', 'type' => 'text', 'group' => 'brands', 'description' => 'Tentang brand BLISERA (halaman brand)'],
+            ['key' => 'brand_fokka_about', 'value' => 'FOKKA didesain untuk pria yang menghargai efisiensi tanpa mengorbankan kualitas. Dengan kemasan minimalis dan formula cepat meresap, FOKKA cocok untuk pria sibuk yang tetap ingin tampil prima. Kami percaya perawatan diri adalah investasi, bukan sekadar rutinitas.', 'type' => 'text', 'group' => 'brands', 'description' => 'Tentang brand FOKKA (halaman brand)'],
+            ['key' => 'brand_pijar_nala_about', 'value' => 'Terinspirasi dari keceriaan anak-anak, PIJAR NALA menghadirkan produk perawatan yang aman, lembut, dan menyenangkan. Setiap formula kami uji secara dermatologis untuk memastikan keamanan pada kulit sensitif si kecil. Karena senyum mereka adalah prioritas utama kami.', 'type' => 'text', 'group' => 'brands', 'description' => 'Tentang brand PIJAR NALA (halaman brand)'],
         ];
 
         foreach ($defaultSettings as $s) {

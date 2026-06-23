@@ -23,6 +23,9 @@ class ProductController extends Controller
         if ($request->is_new) {
             $query->where('is_new', true);
         }
+        if ($request->is_featured) {
+            $query->where('is_featured', true);
+        }
 
         $products = $query->orderBy('sort_order')->orderBy('id')->get()->map(fn($p) => $this->format($p));
         return response()->json($products);
@@ -41,6 +44,12 @@ class ProductController extends Controller
         return response()->json($products);
     }
 
+    public function show($id)
+    {
+        $product = Product::with(['subcategory', 'images'])->findOrFail($id);
+        return response()->json($this->formatAdmin($product));
+    }
+
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -56,6 +65,7 @@ class ProductController extends Controller
             'sortOrder'     => 'nullable|integer',
             'isPromo'       => 'nullable|boolean',
             'isNew'         => 'nullable|boolean',
+            'isFeatured'    => 'nullable|boolean',
             'weight'        => 'nullable|string',
             'dimensions'    => 'nullable|string',
             'bpomNumber'    => 'nullable|string',
@@ -78,6 +88,7 @@ class ProductController extends Controller
             'sort_order'      => $data['sortOrder'] ?? 0,
             'is_promo'        => $data['isPromo'] ?? false,
             'is_new'          => $data['isNew'] ?? false,
+            'is_featured'     => $data['isFeatured'] ?? false,
             'weight'          => $data['weight'] ?? null,
             'dimensions'      => $data['dimensions'] ?? null,
             'bpom_number'     => $data['bpomNumber'] ?? null,
@@ -115,6 +126,7 @@ class ProductController extends Controller
             'sortOrder'     => 'nullable|integer',
             'isPromo'       => 'nullable|boolean',
             'isNew'         => 'nullable|boolean',
+            'isFeatured'    => 'nullable|boolean',
             'weight'        => 'nullable|string',
             'dimensions'    => 'nullable|string',
             'bpomNumber'    => 'nullable|string',
@@ -130,7 +142,7 @@ class ProductController extends Controller
             'description' => 'description', 'ingredients' => 'ingredients',
             'sortOrder' => 'sort_order', 'weight' => 'weight', 'dimensions' => 'dimensions',
             'bpomNumber' => 'bpom_number', 'warrantyInfo' => 'warranty_info',
-            'isPromo' => 'is_promo', 'isNew' => 'is_new', 'halalCertified' => 'halal_certified',
+            'isPromo' => 'is_promo', 'isNew' => 'is_new', 'isFeatured' => 'is_featured', 'halalCertified' => 'halal_certified',
             'price' => 'price',
         ] as $reqKey => $dbKey) {
             if (array_key_exists($reqKey, $data)) {
@@ -190,6 +202,7 @@ class ProductController extends Controller
             'imageUrl'      => $p->image_url,
             'isPromo'       => $p->is_promo,
             'isNew'         => $p->is_new,
+            'isFeatured'    => $p->is_featured,
             'weight'        => $p->weight,
             'dimensions'    => $p->dimensions,
             'bpomNumber'    => $p->bpom_number,
@@ -217,6 +230,7 @@ class ProductController extends Controller
             'sortOrder'     => $p->sort_order,
             'isPromo'       => $p->is_promo,
             'isNew'         => $p->is_new,
+            'isFeatured'    => $p->is_featured,
             'weight'        => $p->weight,
             'dimensions'    => $p->dimensions,
             'bpomNumber'    => $p->bpom_number,

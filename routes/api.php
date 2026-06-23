@@ -22,6 +22,7 @@ Route::get('/products/{id}', [ProductController::class, 'publicShow']);
 Route::get('/testimonials', [TestimonialController::class, 'publicIndex']);
 Route::get('/gallery', [GalleryController::class, 'publicIndex']);
 Route::get('/homepage-content', [HomepageContentController::class, 'publicIndex']);
+Route::get('/about-content', [HomepageContentController::class, 'publicAbout']);
 
 Route::post('/admin/login', [AuthController::class, 'login']);
 Route::post('/admin/seed', [AuthController::class, 'seed']);
@@ -36,6 +37,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/admin/subcategories/{id}', [SubcategoryController::class, 'destroy']);
 
     Route::get('/admin/products', [ProductController::class, 'index']);
+    Route::get('/admin/products/{id}', [ProductController::class, 'show']);
     Route::post('/admin/products', [ProductController::class, 'store']);
     Route::put('/admin/products/{id}', [ProductController::class, 'update']);
     Route::delete('/admin/products/{id}', [ProductController::class, 'destroy']);
@@ -54,7 +56,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/admin/gallery/{id}', [GalleryController::class, 'update']);
     Route::delete('/admin/gallery/{id}', [GalleryController::class, 'destroy']);
 
+    Route::get('/admin/homepage-content', [HomepageContentController::class, 'publicIndex']);
     Route::post('/admin/homepage-content', [HomepageContentController::class, 'store']);
+    Route::get('/admin/about-content', [HomepageContentController::class, 'publicAbout']);
+    Route::post('/admin/about-content', [HomepageContentController::class, 'storeAbout']);
     Route::post('/admin/upload', [UploadController::class, 'upload']);
 
     // RBAC & Settings

@@ -29,10 +29,10 @@ Pastikan sudah terinstall:
 
 ```bash
 # 1. Buat project Laravel 12 baru
-composer create-project laravel/laravel lumiere-api "^12.0"
+composer create-project laravel/laravel rindangcemarasukses-api "^12.0"
 
 # 2. Masuk ke folder
-cd lumiere-api
+cd rindangcemarasukses-api
 
 # 3. Install Laravel Sanctum (untuk token auth)
 composer require laravel/sanctum
@@ -41,18 +41,18 @@ composer require laravel/sanctum
 php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
 ```
 
-Setelah itu **copy semua file dari zip ini** ke dalam folder `lumiere-api/`:
+Setelah itu **copy semua file dari zip ini** ke dalam folder `rindangcemarasukses-api/`:
 
 ```
 Salin folder/file berikut (timpa yang sudah ada):
-  app/Http/Controllers/    → ke lumiere-api/app/Http/Controllers/
-  app/Models/              → ke lumiere-api/app/Models/
-  database/migrations/     → ke lumiere-api/database/migrations/
-  routes/api.php           → ke lumiere-api/routes/api.php
-  routes/web.php           → ke lumiere-api/routes/web.php
-  config/cors.php          → ke lumiere-api/config/cors.php
-  config/auth.php          → ke lumiere-api/config/auth.php
-  bootstrap/app.php        → ke lumiere-api/bootstrap/app.php
+  app/Http/Controllers/    → ke rindangcemarasukses-api/app/Http/Controllers/
+  app/Models/              → ke rindangcemarasukses-api/app/Models/
+  database/migrations/     → ke rindangcemarasukses-api/database/migrations/
+  routes/api.php           → ke rindangcemarasukses-api/routes/api.php
+  routes/web.php           → ke rindangcemarasukses-api/routes/web.php
+  config/cors.php          → ke rindangcemarasukses-api/config/cors.php
+  config/auth.php          → ke rindangcemarasukses-api/config/auth.php
+  bootstrap/app.php        → ke rindangcemarasukses-api/bootstrap/app.php
 ```
 
 ---
@@ -75,7 +75,7 @@ APP_URL=http://localhost:8000
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=lumiere_db       # <-- nama database MySQL kamu
+DB_DATABASE=rindangcemarasukses_db       # <-- nama database MySQL kamu
 DB_USERNAME=root             # <-- username MySQL
 DB_PASSWORD=                 # <-- password MySQL
 
@@ -83,7 +83,7 @@ DB_PASSWORD=                 # <-- password MySQL
 CORS_ALLOWED_ORIGINS=http://localhost:5173,http://localhost:3000
 
 # Setup key untuk inisialisasi data pertama kali
-SETUP_KEY=lumiere-setup-2024
+SETUP_KEY=rindangcemarasukses-setup-2024
 ```
 
 ---
@@ -92,7 +92,7 @@ SETUP_KEY=lumiere-setup-2024
 
 ```bash
 # Buat database dulu di MySQL
-mysql -u root -p -e "CREATE DATABASE lumiere_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+mysql -u root -p -e "CREATE DATABASE rindangcemarasukses_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 
 # Jalankan migrasi (buat semua tabel)
 php artisan migrate
@@ -105,15 +105,15 @@ php artisan storage:link
 
 ```
 POST http://localhost:8000/api/admin/seed
-Body JSON: { "setupKey": "lumiere-setup-2024" }
+Body JSON: { "setupKey": "rindangcemarasukses-setup-2024" }
 ```
 
 Atau buka di browser React: `http://localhost:5173/admin/setup`  
-Masukkan setup key: **lumiere-setup-2024**
+Masukkan setup key: **rindangcemarasukses-setup-2024**
 
 Akun admin default yang dibuat:
 - Username: **admin**
-- Password: **lumiere2024**
+- Password: **rindangcemarasukses2024**
 
 ---
 
@@ -121,14 +121,14 @@ Akun admin default yang dibuat:
 
 **Terminal 1 — Laravel API:**
 ```bash
-cd lumiere-api
+cd rindangcemarasukses-api
 php artisan serve
 # API berjalan di: http://localhost:8000
 ```
 
 **Terminal 2 — React:**
 ```bash
-cd lumiere-react
+cd rindangcemarasukses-react
 cp .env.example .env
 # Edit .env: VITE_API_URL=http://localhost:8000/api
 npm install
@@ -146,15 +146,15 @@ Hostinger shared hosting mendukung PHP 8.2. Caranya:
 
 1. **Di cPanel/hPanel Hostinger**, buat subdomain baru:  
    Contoh: `api.namadomain.com`  
-   Arahkan **Document Root** ke: `public_html/lumiere-api/public`
+   Arahkan **Document Root** ke: `public_html/rindangcemarasukses-api/public`
 
 2. **Upload file** via File Manager atau FTP:
-   - Upload seluruh folder `lumiere-api/` ke `public_html/lumiere-api/`
+   - Upload seluruh folder `rindangcemarasukses-api/` ke `public_html/rindangcemarasukses-api/`
    - Pastikan folder `public/` ada di dalamnya
 
 3. **Buat database MySQL di hPanel:**
    - Masuk ke `Databases → MySQL Databases`
-   - Buat database: misalnya `u123456_lumiere`
+   - Buat database: misalnya `u123456_rindangcemarasukses`
    - Buat user dan hubungkan ke database tersebut
    - Catat: host, username, password, nama database
 
@@ -165,8 +165,8 @@ Hostinger shared hosting mendukung PHP 8.2. Caranya:
    APP_URL=https://api.namadomain.com
 
    DB_HOST=localhost
-   DB_DATABASE=u123456_lumiere
-   DB_USERNAME=u123456_lumiere
+   DB_DATABASE=u123456_rindangcemarasukses
+   DB_USERNAME=u123456_rindangcemarasukses
    DB_PASSWORD=password_kamu
 
    CORS_ALLOWED_ORIGINS=https://namadomain.com,https://www.namadomain.com
@@ -176,7 +176,7 @@ Hostinger shared hosting mendukung PHP 8.2. Caranya:
 
 5. **Jalankan perintah via SSH** (aktifkan SSH di hPanel terlebih dahulu):
    ```bash
-   cd ~/public_html/lumiere-api
+   cd ~/public_html/rindangcemarasukses-api
    composer install --optimize-autoloader --no-dev
    php artisan key:generate
    php artisan migrate --force
@@ -199,7 +199,7 @@ Hostinger shared hosting mendukung PHP 8.2. Caranya:
 
 1. **Build React untuk produksi:**
    ```bash
-   cd lumiere-react
+   cd rindangcemarasukses-react
    # Edit .env untuk produksi:
    echo "VITE_API_URL=https://api.namadomain.com/api" > .env
    npm run build

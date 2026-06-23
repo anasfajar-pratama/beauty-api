@@ -12,7 +12,7 @@ class Product extends Model
     protected $fillable = [
         'name', 'category', 'tagline', 'ingredients',
         'benefits', 'how_to_use', 'image_url', 'sort_order',
-        'subcategory_id', 'is_promo', 'is_new', 'description',
+        'subcategory_id', 'is_promo', 'is_new', 'is_featured', 'description',
         'weight', 'dimensions', 'bpom_number', 'certifications',
         'halal_certified', 'warranty_info', 'price',
     ];

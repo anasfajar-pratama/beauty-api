@@ -14,8 +14,26 @@ class UploadController extends Controller
         ]);
 
         $file      = $request->file('image');
-        $filename  = Str::uuid() . '.' . $file->getClientOriginalExtension();
+        $origName  = $file->getClientOriginalName();
+        $ext       = $file->getClientOriginalExtension();
+
+        if (!$ext) {
+            $mime = $file->getMimeType();
+            $map = [
+                'image/jpeg' => 'jpg',
+                'image/png'  => 'png',
+                'image/webp' => 'webp',
+                'image/gif'  => 'gif',
+            ];
+            $ext = $map[$mime] ?? 'jpg';
+        }
+
+        $filename  = Str::uuid() . '.' . $ext;
         $path      = $file->storeAs('uploads', $filename, 'public');
+
+        if (!$path) {
+            return response()->json(['message' => 'Gagal menyimpan file'], 500);
+        }
 
         $imageUrl = url('storage/' . $path);
 
