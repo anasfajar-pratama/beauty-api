@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         Admin::firstOrCreate(
             ['username' => 'admin'],
-            ['password' => Hash::make('lumiere2024')]
+            ['password' => Hash::make('rindangcemarasukses2026')]
         );
 
         $subcategories = [
@@ -93,17 +93,24 @@ class DatabaseSeeder extends Seeder
         }
 
         $contents = [
-            'hero_title'            => 'Kecantikan untuk',
-            'hero_title_highlight'  => 'Setiap Jiwa',
-            'hero_subtitle'         => 'Perawatan kulit mewah untuk wanita, pria, dan anak-anak. Diformulasikan dengan bahan alami terbaik.',
-            'about_title'           => 'Filosofi Kemurnian',
-            'about_text1'           => 'Lumière lahir dari kepercayaan bahwa alam menyimpan rahasia terbaik untuk kulit yang sehat dan bercahaya.',
-            'about_text2'           => 'Setiap tetes produk kami diracik dengan ketelitian tinggi, menghadirkan pengalaman layaknya perawatan di spa mewah.',
-            'about_quote'           => 'Kecantikan sejati memancar ketika Anda merasa nyaman dengan kulit Anda sendiri.',
-            'newsletter_title'      => 'Bergabung dengan Komunitas Lumière',
-            'newsletter_subtitle'   => 'Dapatkan informasi terbaru mengenai peluncuran produk, penawaran eksklusif, dan tips perawatan kulit.',
-            'brand_name'            => 'LUMIÈRE',
-            'brand_tagline'         => 'Kecantikan untuk Setiap Jiwa',
+            'section_kategori_title'      => 'Koleksi Berdasarkan Kategori',
+            'section_kategori_subtitle'   => 'Temukan alat kecantikan yang sesuai dengan kebutuhanmu',
+            'section_unggulan_title'      => 'Pilihan Terbaik Kami',
+            'section_unggulan_subtitle'   => 'Rekomendasi produk terbaik yang wajib kamu coba',
+            'section_promo_title'         => 'Penawaran Terbatas',
+            'section_promo_subtitle'      => 'Dapatkan produk favorit dengan harga spesial sebelum kehabisan!',
+            'section_terbaru_title'       => 'Produk Terbaru',
+            'section_terbaru_subtitle'    => 'Kenalan dengan produk-produk baru kami',
+            'section_features_title'      => 'Mengapa Produk Kami?',
+            'section_features_subtitle'   => 'Kami berkomitmen menghadirkan yang terbaik untuk kecantikan Anda',
+            'section_testimonials_title'  => 'Apa Kata Mereka',
+            'section_testimonials_subtitle' => 'Testimoni dari pelanggan setia Rindang Cemara Sukses',
+            'about_title'                 => 'Inovasi untuk Kecantikan',
+            'about_text1'                 => 'Rindang Cemara Sukses menghadirkan alat kecantikan berkualitas tinggi yang menggabungkan teknologi modern dengan desain elegan.',
+            'about_text2'                 => 'Setiap produk dirancang dengan teliti menggunakan material terbaik untuk hasil maksimal.',
+            'about_quote'                 => 'Kecantikan sejati memancar ketika Anda merasa nyaman dengan kulit Anda sendiri.',
+            'newsletter_title'            => 'Dapatkan Update Terbaru',
+            'newsletter_subtitle'         => 'Berlangganan untuk info produk baru dan penawaran eksklusif.',
         ];
 
         foreach ($contents as $key => $value) {

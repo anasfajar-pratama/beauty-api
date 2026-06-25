@@ -60,7 +60,7 @@ class AuthController extends Controller
     {
         $request->validate(['setupKey' => 'required|string']);
 
-        $validKey = env('SETUP_KEY', 'lumiere-setup-2024');
+        $validKey = env('SETUP_KEY', 'rindangcemarasukses-setup-2026');
         if ($request->setupKey !== $validKey) {
             return response()->json(['error' => 'Setup key tidak valid'], 403);
         }
@@ -73,7 +73,7 @@ class AuthController extends Controller
         $admin = Admin::create([
             'username' => 'admin',
             'name' => 'Super Admin',
-            'password' => Hash::make('lumiere2024'),
+            'password' => Hash::make('rindangcemarasukses2026'),
         ]);
 
         // Assign super-admin role if exists
