@@ -321,4 +321,7 @@ RewriteRule ^index\.html$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.html [L]
-#  
+#  pastikan ubah file ini config\cors.php
+'allowed_origins' => [
+        'https://beauty.kebunkode.com','http://localhost:5173'
+    ],
