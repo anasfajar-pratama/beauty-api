@@ -62,6 +62,8 @@ class ProductController extends Controller
             'benefits'      => 'nullable|array',
             'howToUse'      => 'nullable|array',
             'imageUrl'      => 'nullable|string',
+            'beforeImage'   => 'nullable|string',
+            'afterImage'    => 'nullable|string',
             'sortOrder'     => 'nullable|integer',
             'isPromo'       => 'nullable|boolean',
             'isNew'         => 'nullable|boolean',
@@ -73,6 +75,10 @@ class ProductController extends Controller
             'halalCertified'=> 'nullable|boolean',
             'warrantyInfo'  => 'nullable|string',
             'price'         => 'nullable|numeric',
+            'originalPrice' => 'nullable|numeric',
+            'shopeeUrl'     => 'nullable|string|max:255',
+            'tokopediaUrl'  => 'nullable|string|max:255',
+            'tiktokUrl'     => 'nullable|string|max:255',
         ]);
 
         $product = Product::create([
@@ -85,6 +91,8 @@ class ProductController extends Controller
             'benefits'        => isset($data['benefits']) ? json_encode(array_values(array_filter($data['benefits']))) : null,
             'how_to_use'      => isset($data['howToUse']) ? json_encode(array_values(array_filter($data['howToUse']))) : null,
             'image_url'       => $data['imageUrl'] ?? null,
+            'before_image'    => $data['beforeImage'] ?? null,
+            'after_image'     => $data['afterImage'] ?? null,
             'sort_order'      => $data['sortOrder'] ?? 0,
             'is_promo'        => $data['isPromo'] ?? false,
             'is_new'          => $data['isNew'] ?? false,
@@ -96,6 +104,10 @@ class ProductController extends Controller
             'halal_certified' => $data['halalCertified'] ?? false,
             'warranty_info'   => $data['warrantyInfo'] ?? null,
             'price'           => $data['price'] ?? null,
+            'original_price'  => $data['originalPrice'] ?? null,
+            'shopee_url'      => $data['shopeeUrl'] ?? null,
+            'tokopedia_url'   => $data['tokopediaUrl'] ?? null,
+            'tiktok_url'      => $data['tiktokUrl'] ?? null,
         ]);
 
         if (!empty($data['imageUrl'])) {
@@ -123,6 +135,8 @@ class ProductController extends Controller
             'benefits'      => 'nullable|array',
             'howToUse'      => 'nullable|array',
             'imageUrl'      => 'nullable|string',
+            'beforeImage'   => 'nullable|string',
+            'afterImage'    => 'nullable|string',
             'sortOrder'     => 'nullable|integer',
             'isPromo'       => 'nullable|boolean',
             'isNew'         => 'nullable|boolean',
@@ -134,6 +148,10 @@ class ProductController extends Controller
             'halalCertified'=> 'nullable|boolean',
             'warrantyInfo'  => 'nullable|string',
             'price'         => 'nullable|numeric',
+            'originalPrice' => 'nullable|numeric',
+            'shopeeUrl'     => 'sometimes|nullable|string|max:255',
+            'tokopediaUrl'  => 'sometimes|nullable|string|max:255',
+            'tiktokUrl'     => 'sometimes|nullable|string|max:255',
         ]);
 
         $updateData = [];
@@ -143,7 +161,9 @@ class ProductController extends Controller
             'sortOrder' => 'sort_order', 'weight' => 'weight', 'dimensions' => 'dimensions',
             'bpomNumber' => 'bpom_number', 'warrantyInfo' => 'warranty_info',
             'isPromo' => 'is_promo', 'isNew' => 'is_new', 'isFeatured' => 'is_featured', 'halalCertified' => 'halal_certified',
-            'price' => 'price',
+            'price' => 'price', 'originalPrice' => 'original_price',
+            'beforeImage' => 'before_image', 'afterImage' => 'after_image',
+            'shopeeUrl' => 'shopee_url', 'tokopediaUrl' => 'tokopedia_url', 'tiktokUrl' => 'tiktok_url',
         ] as $reqKey => $dbKey) {
             if (array_key_exists($reqKey, $data)) {
                 $updateData[$dbKey] = $data[$reqKey];
@@ -200,16 +220,22 @@ class ProductController extends Controller
             'howToUse'      => json_decode($p->how_to_use ?? '[]', true),
             'images'        => $p->images->map(fn($i) => ['id' => $i->id, 'imageUrl' => $i->image_url, 'isPrimary' => $i->is_primary])->values(),
             'imageUrl'      => $p->image_url,
-            'isPromo'       => $p->is_promo,
-            'isNew'         => $p->is_new,
-            'isFeatured'    => $p->is_featured,
+            'beforeImage'   => $p->before_image,
+            'afterImage'    => $p->after_image,
+            'isPromo'       => (bool) $p->is_promo,
+            'isNew'         => (bool) $p->is_new,
+            'isFeatured'    => (bool) $p->is_featured,
             'weight'        => $p->weight,
             'dimensions'    => $p->dimensions,
             'bpomNumber'    => $p->bpom_number,
             'certifications'=> json_decode($p->certifications ?? '[]', true),
-            'halalCertified'=> $p->halal_certified,
+            'halalCertified'=> (bool) $p->halal_certified,
             'warrantyInfo'  => $p->warranty_info,
             'price'         => $p->price,
+            'originalPrice' => $p->original_price,
+            'shopeeUrl'     => $p->shopee_url,
+            'tokopediaUrl'  => $p->tokopedia_url,
+            'tiktokUrl'     => $p->tiktok_url,
         ];
     }
 
@@ -227,17 +253,23 @@ class ProductController extends Controller
             'howToUse'      => json_decode($p->how_to_use ?? '[]', true),
             'images'        => $p->images->map(fn($i) => ['id' => $i->id, 'imageUrl' => $i->image_url, 'isPrimary' => $i->is_primary, 'sortOrder' => $i->sort_order])->values(),
             'imageUrl'      => $p->image_url,
+            'beforeImage'   => $p->before_image,
+            'afterImage'    => $p->after_image,
             'sortOrder'     => $p->sort_order,
-            'isPromo'       => $p->is_promo,
-            'isNew'         => $p->is_new,
-            'isFeatured'    => $p->is_featured,
+            'isPromo'       => (bool) $p->is_promo,
+            'isNew'         => (bool) $p->is_new,
+            'isFeatured'    => (bool) $p->is_featured,
             'weight'        => $p->weight,
             'dimensions'    => $p->dimensions,
             'bpomNumber'    => $p->bpom_number,
             'certifications'=> json_decode($p->certifications ?? '[]', true),
-            'halalCertified'=> $p->halal_certified,
+            'halalCertified'=> (bool) $p->halal_certified,
             'warrantyInfo'  => $p->warranty_info,
             'price'         => $p->price,
+            'originalPrice' => $p->original_price,
+            'shopeeUrl'     => $p->shopee_url,
+            'tokopediaUrl'  => $p->tokopedia_url,
+            'tiktokUrl'     => $p->tiktok_url,
         ];
     }
 }
