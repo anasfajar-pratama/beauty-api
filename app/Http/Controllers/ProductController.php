@@ -79,6 +79,7 @@ class ProductController extends Controller
             'shopeeUrl'     => 'nullable|string|max:255',
             'tokopediaUrl'  => 'nullable|string|max:255',
             'tiktokUrl'     => 'nullable|string|max:255',
+            'showBeforeAfter' => 'nullable|boolean',
         ]);
 
         $product = Product::create([
@@ -108,6 +109,7 @@ class ProductController extends Controller
             'shopee_url'      => $data['shopeeUrl'] ?? null,
             'tokopedia_url'   => $data['tokopediaUrl'] ?? null,
             'tiktok_url'      => $data['tiktokUrl'] ?? null,
+            'show_before_after' => $data['showBeforeAfter'] ?? false,
         ]);
 
         if (!empty($data['imageUrl'])) {
@@ -152,6 +154,7 @@ class ProductController extends Controller
             'shopeeUrl'     => 'sometimes|nullable|string|max:255',
             'tokopediaUrl'  => 'sometimes|nullable|string|max:255',
             'tiktokUrl'     => 'sometimes|nullable|string|max:255',
+            'showBeforeAfter' => 'nullable|boolean',
         ]);
 
         $updateData = [];
@@ -164,6 +167,7 @@ class ProductController extends Controller
             'price' => 'price', 'originalPrice' => 'original_price',
             'beforeImage' => 'before_image', 'afterImage' => 'after_image',
             'shopeeUrl' => 'shopee_url', 'tokopediaUrl' => 'tokopedia_url', 'tiktokUrl' => 'tiktok_url',
+            'showBeforeAfter' => 'show_before_after',
         ] as $reqKey => $dbKey) {
             if (array_key_exists($reqKey, $data)) {
                 $updateData[$dbKey] = $data[$reqKey];
@@ -233,9 +237,12 @@ class ProductController extends Controller
             'warrantyInfo'  => $p->warranty_info,
             'price'         => $p->price,
             'originalPrice' => $p->original_price,
+            'price'         => (int) $p->price,
+            'originalPrice' => (int) $p->original_price,
             'shopeeUrl'     => $p->shopee_url,
             'tokopediaUrl'  => $p->tokopedia_url,
             'tiktokUrl'     => $p->tiktok_url,
+            'showBeforeAfter' => (bool) $p->show_before_after,
         ];
     }
 
@@ -267,9 +274,12 @@ class ProductController extends Controller
             'warrantyInfo'  => $p->warranty_info,
             'price'         => $p->price,
             'originalPrice' => $p->original_price,
+            'price'         => (int) $p->price,
+            'originalPrice' => (int) $p->original_price,
             'shopeeUrl'     => $p->shopee_url,
             'tokopediaUrl'  => $p->tokopedia_url,
             'tiktokUrl'     => $p->tiktok_url,
+            'showBeforeAfter' => (bool) $p->show_before_after,
         ];
     }
 }
