@@ -9,7 +9,7 @@ class Testimonial extends Model
 {
     use LogsActivity;
     protected $table    = 'testimonials';
-    protected $fillable = ['name', 'content', 'rating', 'avatar_url', 'is_active'];
+    protected $fillable = ['name', 'content', 'phone', 'email', 'rating', 'avatar_url', 'is_active', 'is_admin_created'];
 
     public $timestamps = true;
 }

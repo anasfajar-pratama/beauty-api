@@ -21,9 +21,14 @@ Route::get('/subcategories', [SubcategoryController::class, 'publicIndex']);
 Route::get('/products', [ProductController::class, 'publicIndex']);
 Route::get('/products/{id}', [ProductController::class, 'publicShow']);
 Route::get('/testimonials', [TestimonialController::class, 'publicIndex']);
+Route::post('/testimonials', [TestimonialController::class, 'publicStore']);
 Route::get('/gallery', [GalleryController::class, 'publicIndex']);
 Route::get('/homepage-content', [HomepageContentController::class, 'publicIndex']);
 Route::get('/about-content', [HomepageContentController::class, 'publicAbout']);
+Route::get('/legal-achievements', function () {
+    $setting = App\Models\Setting::where('key', 'legal_achievements')->first();
+    return response()->json($setting ? json_decode($setting->value, true) : []);
+});
 Route::get('/heroes', [HeroController::class, 'publicIndex']);
 
 Route::post('/admin/login', [AuthController::class, 'login']);
