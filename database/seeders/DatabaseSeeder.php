@@ -2,23 +2,15 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\Admin;
 use App\Models\Subcategory;
-use Illuminate\Support\Facades\Hash;
 use App\Models\Product;
 use App\Models\Testimonial;
-use App\Models\HomepageContent;
 use Illuminate\Database\Seeder;
-
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        Admin::firstOrCreate(
-            ['username' => 'admin'],
-            ['password' => Hash::make('rindangcemarasukses2026')]
-        );
+        // $this->call(SeedMissingData::class);
 
         $subcategories = [
             ['category' => 'Wanita', 'name' => 'Cleanser', 'slug' => 'cleanser'],
@@ -83,38 +75,13 @@ class DatabaseSeeder extends Seeder
 
         $testimonials = [
             ['name' => 'Siti A.',  'content' => 'Kulit saya tidak pernah secerah ini. Serum glow-nya benar-benar bekerja!',                      'rating' => '5', 'is_active' => true],
-            ['name' => 'Budi P.',  'content' => 'Produk pria sangat praktis. Tidak lengket dan menyegarkan setelah olahraga.',                   'rating' => '5', 'is_active' => true],
+            ['name' => 'Alex P.',  'content' => 'Produk pria sangat praktis. Tidak lengket dan menyegarkan setelah olahraga.',                   'rating' => '5', 'is_active' => true],
             ['name' => 'Rina M.',  'content' => 'Sabun mandi anak sangat lembut, anak saya tidak pernah komplain pedih di mata lagi.',           'rating' => '5', 'is_active' => true],
             ['name' => 'Dewi K.',  'content' => 'Pengalaman mewah dengan harga yang sangat sepadan. Kemasannya sangat cantik.',                  'rating' => '5', 'is_active' => true],
         ];
 
         foreach ($testimonials as $t) {
             Testimonial::firstOrCreate(['name' => $t['name'], 'content' => $t['content']], $t);
-        }
-
-        $contents = [
-            'section_kategori_title'      => 'Koleksi Berdasarkan Kategori',
-            'section_kategori_subtitle'   => 'Temukan alat kecantikan yang sesuai dengan kebutuhanmu',
-            'section_unggulan_title'      => 'Pilihan Terbaik Kami',
-            'section_unggulan_subtitle'   => 'Rekomendasi produk terbaik yang wajib kamu coba',
-            'section_promo_title'         => 'Penawaran Terbatas',
-            'section_promo_subtitle'      => 'Dapatkan produk favorit dengan harga spesial sebelum kehabisan!',
-            'section_terbaru_title'       => 'Produk Terbaru',
-            'section_terbaru_subtitle'    => 'Kenalan dengan produk-produk baru kami',
-            'section_features_title'      => 'Mengapa Produk Kami?',
-            'section_features_subtitle'   => 'Kami berkomitmen menghadirkan yang terbaik untuk kecantikan Anda',
-            'section_testimonials_title'  => 'Apa Kata Mereka',
-            'section_testimonials_subtitle' => 'Testimoni dari pelanggan setia Rindang Cemara Sukses',
-            'about_title'                 => 'Inovasi untuk Kecantikan',
-            'about_text1'                 => 'Rindang Cemara Sukses menghadirkan alat kecantikan berkualitas tinggi yang menggabungkan teknologi modern dengan desain elegan.',
-            'about_text2'                 => 'Setiap produk dirancang dengan teliti menggunakan material terbaik untuk hasil maksimal.',
-            'about_quote'                 => 'Kecantikan sejati memancar ketika Anda merasa nyaman dengan kulit Anda sendiri.',
-            'newsletter_title'            => 'Dapatkan Update Terbaru',
-            'newsletter_subtitle'         => 'Berlangganan untuk info produk baru dan penawaran eksklusif.',
-        ];
-
-        foreach ($contents as $key => $value) {
-            HomepageContent::updateOrCreate(['key' => $key], ['value' => $value]);
         }
     }
 }
