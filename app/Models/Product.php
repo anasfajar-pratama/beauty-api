@@ -16,7 +16,7 @@ class Product extends Model
         'weight', 'dimensions', 'bpom_number', 'certifications',
         'halal_certified', 'warranty_info', 'price',
         'original_price', 'shopee_url', 'tokopedia_url', 'tiktok_url',
-        'before_image', 'after_image',
+        'before_image', 'after_image', 'show_before_after',
     ];
 
     public $timestamps = true;
