@@ -15,6 +15,8 @@ class Product extends Model
         'subcategory_id', 'is_promo', 'is_new', 'is_featured', 'description',
         'weight', 'dimensions', 'bpom_number', 'certifications',
         'halal_certified', 'warranty_info', 'price',
+        'original_price', 'shopee_url', 'tokopedia_url', 'tiktok_url',
+        'before_image', 'after_image',
     ];
 
     public $timestamps = true;

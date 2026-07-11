@@ -30,12 +30,19 @@ class SettingController extends Controller
     public function update(Request $request, $id)
     {
         $setting = Setting::findOrFail($id);
-        $data = $request->validate([
+
+        $rules = [
             'value' => 'nullable|string',
             'type' => 'sometimes|in:string,text,boolean,json,image',
             'group' => 'sometimes|string|max:255',
             'description' => 'nullable|string',
-        ]);
+        ];
+
+        if ($setting->key === 'whatsapp_phone') {
+            $rules['value'] = 'nullable|string|regex:/^62\d{7,15}$/';
+        }
+
+        $data = $request->validate($rules);
 
         $setting->update($data);
         return response()->json($setting);
