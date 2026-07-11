@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Role;
 use App\Models\Permission;
 use App\Models\Setting;
+use App\Models\Hero;
 use App\Models\Admin;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -57,6 +58,12 @@ class RbacSeeder extends Seeder
             ['name' => 'Edit Brand', 'slug' => 'edit_brands', 'group' => 'brands'],
             ['name' => 'Lihat About', 'slug' => 'view_about', 'group' => 'about'],
             ['name' => 'Upload File', 'slug' => 'upload_files', 'group' => 'files'],
+
+            // Hero permissions
+            ['name' => 'Lihat Hero', 'slug' => 'view_heroes', 'group' => 'heroes'],
+            ['name' => 'Buat Hero', 'slug' => 'create_heroes', 'group' => 'heroes'],
+            ['name' => 'Edit Hero', 'slug' => 'edit_heroes', 'group' => 'heroes'],
+            ['name' => 'Hapus Hero', 'slug' => 'delete_heroes', 'group' => 'heroes'],
         ];
 
         foreach ($permissions as $p) {
@@ -97,6 +104,7 @@ class RbacSeeder extends Seeder
             'view_testimonials', 'create_testimonials', 'edit_testimonials',
             'view_gallery', 'create_gallery', 'edit_gallery',
             'view_homepage', 'edit_homepage',
+            'view_heroes', 'edit_heroes',
             'upload_files',
         ])->pluck('id');
         $editor->permissions()->sync($editorPerms);
@@ -154,6 +162,98 @@ class RbacSeeder extends Seeder
             Setting::firstOrCreate(['key' => $s['key']], $s);
         }
 
-        echo "RBAC dan Settings berhasil di-seed!\n";
+        // Default heroes
+        $defaultHeroes = [
+            [
+                'type' => 'brand',
+                'brand_key' => 'blisera',
+                'theme' => 'rose',
+                'title' => 'Elegan & Mewah',
+                'subtitle' => 'Untuk Wanita Modern',
+                'description' => 'Rangkaian perawatan kulit premium dengan bahan alami terbaik untuk kecantikan yang bersinar.',
+                'button_text' => 'Koleksi Wanita',
+                'button_link' => '/brand/blisera',
+                'logo_style' => 'rounded',
+                'sort_order' => 0,
+                'is_active' => true,
+            ],
+            [
+                'type' => 'brand',
+                'brand_key' => 'pijar_nala',
+                'theme' => 'sky',
+                'title' => 'Lembut & Aman',
+                'subtitle' => 'Untuk Baby & Kids',
+                'description' => 'Perawatan lembut dengan bahan alami yang aman untuk kulit si kecil.',
+                'button_text' => 'Koleksi Anak',
+                'button_link' => '/brand/pijar-nala',
+                'logo_style' => 'rounded',
+                'sort_order' => 1,
+                'is_active' => true,
+            ],
+            [
+                'type' => 'brand',
+                'brand_key' => 'fokka',
+                'theme' => 'slate',
+                'title' => 'Tegas & Percaya Diri',
+                'subtitle' => 'Untuk Pria Tangguh',
+                'description' => 'Perawatan pria modern yang praktis dan menyegarkan untuk aktivitas sehari-hari.',
+                'button_text' => 'Koleksi Pria',
+                'button_link' => '/brand/fokka',
+                'logo_style' => 'rounded',
+                'sort_order' => 2,
+                'is_active' => true,
+            ],
+            [
+                'type' => 'product',
+                'product_type' => 'featured',
+                'theme' => 'rose',
+                'title' => 'Pilihan Terbaik Kami',
+                'subtitle' => 'Produp Unggulan',
+                'description' => 'Rekomendasi produk terbaik yang wajib kamu coba.',
+                'button_text' => 'Lihat Produk Unggulan',
+                'button_link' => '/products?filter=featured',
+                'label' => 'Produk Unggulan',
+                'label_color' => '#B76E79',
+                'sort_order' => 3,
+                'is_active' => true,
+            ],
+            [
+                'type' => 'product',
+                'product_type' => 'promo',
+                'theme' => 'amber',
+                'title' => 'Penawaran Terbatas',
+                'subtitle' => 'Promo Spesial',
+                'description' => 'Dapatkan produk favorit dengan harga spesial sebelum kehabisan!',
+                'button_text' => 'Lihat Promo',
+                'button_link' => '/products?filter=promo',
+                'label' => 'Promo Spesial',
+                'label_color' => '#F59E0B',
+                'sort_order' => 4,
+                'is_active' => true,
+            ],
+            [
+                'type' => 'product',
+                'product_type' => 'new',
+                'theme' => 'sky',
+                'title' => 'Produk Terbaru',
+                'subtitle' => 'Baru Datang',
+                'description' => 'Kenalan dengan produk-produk baru kami.',
+                'button_text' => 'Lihat Produk Baru',
+                'button_link' => '/products?filter=new',
+                'label' => 'Baru Datang',
+                'label_color' => '#0EA5E9',
+                'sort_order' => 5,
+                'is_active' => true,
+            ],
+        ];
+
+        foreach ($defaultHeroes as $h) {
+            Hero::firstOrCreate(
+                ['type' => $h['type'], 'brand_key' => $h['brand_key'] ?? null, 'product_type' => $h['product_type'] ?? null],
+                $h
+            );
+        }
+
+        echo "RBAC, Settings, dan Heroes berhasil di-seed!\n";
     }
 }

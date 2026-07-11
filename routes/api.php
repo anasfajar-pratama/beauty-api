@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\HeroController;
 
 Route::get('/settings', [SettingController::class, 'publicIndex']);
 Route::get('/subcategories', [SubcategoryController::class, 'publicIndex']);
@@ -23,6 +24,7 @@ Route::get('/testimonials', [TestimonialController::class, 'publicIndex']);
 Route::get('/gallery', [GalleryController::class, 'publicIndex']);
 Route::get('/homepage-content', [HomepageContentController::class, 'publicIndex']);
 Route::get('/about-content', [HomepageContentController::class, 'publicAbout']);
+Route::get('/heroes', [HeroController::class, 'publicIndex']);
 
 Route::post('/admin/login', [AuthController::class, 'login']);
 Route::post('/admin/seed', [AuthController::class, 'seed']);
@@ -81,4 +83,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/admin/settings/{id}', [SettingController::class, 'destroy']);
 
     Route::get('/admin/activity-logs', [ActivityLogController::class, 'index']);
+
+    // Hero management
+    Route::get('/admin/heroes', [HeroController::class, 'index']);
+    Route::post('/admin/heroes', [HeroController::class, 'store']);
+    Route::get('/admin/heroes/{id}', [HeroController::class, 'show']);
+    Route::put('/admin/heroes/{id}', [HeroController::class, 'update']);
+    Route::delete('/admin/heroes/{id}', [HeroController::class, 'destroy']);
+    Route::post('/admin/heroes/reorder', [HeroController::class, 'reorder']);
 });
