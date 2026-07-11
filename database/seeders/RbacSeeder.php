@@ -156,6 +156,11 @@ class RbacSeeder extends Seeder
             ['key' => 'brand_blisera_about', 'value' => 'BLISERA percaya bahwa setiap wanita berhak tampil percaya diri dengan kulit yang sehat. Kami menghadirkan rangkaian perawatan yang terinspirasi dari ritual kecantikan klasik yang dipadukan dengan inovasi modern. Dari serum pencerah hingga pelembap intensif, setiap produk BLISERA dirancang dengan cinta dan ketelitian untuk memberikan pengalaman mewah setiap hari.', 'type' => 'text', 'group' => 'brands', 'description' => 'Tentang brand BLISERA (halaman brand)'],
             ['key' => 'brand_fokka_about', 'value' => 'FOKKA didesain untuk pria yang menghargai efisiensi tanpa mengorbankan kualitas. Dengan kemasan minimalis dan formula cepat meresap, FOKKA cocok untuk pria sibuk yang tetap ingin tampil prima. Kami percaya perawatan diri adalah investasi, bukan sekadar rutinitas.', 'type' => 'text', 'group' => 'brands', 'description' => 'Tentang brand FOKKA (halaman brand)'],
             ['key' => 'brand_pijar_nala_about', 'value' => 'Terinspirasi dari keceriaan anak-anak, PIJAR NALA menghadirkan produk perawatan yang aman, lembut, dan menyenangkan. Setiap formula kami uji secara dermatologis untuk memastikan keamanan pada kulit sensitif si kecil. Karena senyum mereka adalah prioritas utama kami.', 'type' => 'text', 'group' => 'brands', 'description' => 'Tentang brand PIJAR NALA (halaman brand)'],
+
+            ['key' => 'legal_achievements', 'value' => '[]', 'type' => 'json', 'group' => 'legal', 'description' => 'Daftar legal & achievement (JSON)'],
+
+            // Feature toggles
+            ['key' => 'testimonial_enabled', 'value' => '1', 'type' => 'boolean', 'group' => 'features', 'description' => 'Aktifkan fitur tulis testimoni publik'],
         ];
 
         foreach ($defaultSettings as $s) {
