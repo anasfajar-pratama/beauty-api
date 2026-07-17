@@ -26,10 +26,13 @@ class HomepageContentController extends Controller
             'section_unggulan_title', 'section_unggulan_subtitle',
             'section_promo_title', 'section_promo_subtitle',
             'section_terbaru_title', 'section_terbaru_subtitle',
-            'section_features_title', 'section_features_subtitle',
+            'section_features_title', 'section_features_subtitle', 'features_cards',
             'section_testimonials_title', 'section_testimonials_subtitle',
+            'section_gallery_title', 'section_gallery_subtitle',
             'about_title', 'about_text', 'about_text1', 'about_text2', 'about_quote', 'about_image',
             'newsletter_title', 'newsletter_subtitle',
+            'category_hero_blisera', 'category_hero_fokka', 'category_hero_pijar_nala',
+            'category_desc_blisera', 'category_desc_fokka', 'category_desc_pijar_nala',
         ];
 
         foreach ($allowed as $key) {
@@ -67,7 +70,7 @@ class HomepageContentController extends Controller
             'about_value_2_icon', 'about_value_2_title', 'about_value_2_desc',
             'about_value_3_icon', 'about_value_3_title', 'about_value_3_desc',
             'about_value_4_icon', 'about_value_4_title', 'about_value_4_desc',
-            'about_team_title',
+            'about_team_title', 'about_team_enabled',
             'about_team_1_image', 'about_team_1_name', 'about_team_1_role',
             'about_team_2_image', 'about_team_2_name', 'about_team_2_role',
             'about_team_3_image', 'about_team_3_name', 'about_team_3_role',
