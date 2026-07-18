@@ -104,6 +104,13 @@ class TestimonialController extends Controller
         return response()->json($this->formatAdmin($testimonial->fresh()));
     }
 
+    public function markRead($id)
+    {
+        $testimonial = Testimonial::findOrFail($id);
+        $testimonial->update(['is_read' => true]);
+        return response()->json(['message' => 'Testimoni ditandai sudah dibaca']);
+    }
+
     public function destroy($id)
     {
         Testimonial::findOrFail($id)->delete();
@@ -132,6 +139,7 @@ class TestimonialController extends Controller
             'avatarUrl'       => $t->avatar_url,
             'isActive'        => (bool) $t->is_active,
             'isAdminCreated'  => (bool) $t->is_admin_created,
+            'isRead'          => (bool) $t->is_read,
         ];
     }
 }

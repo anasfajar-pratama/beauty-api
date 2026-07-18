@@ -9,6 +9,7 @@ use App\Models\ActivityLog;
 use App\Models\Product;
 use App\Models\Testimonial;
 use App\Models\HomepageContent;
+use App\Models\ContactMessage;
 
 class AuthController extends Controller
 {
@@ -131,8 +132,10 @@ class AuthController extends Controller
     public function stats(Request $request)
     {
         return response()->json([
-            'products'     => Product::count(),
-            'testimonials' => Testimonial::count(),
+            'products'             => Product::count(),
+            'testimonials'         => Testimonial::count(),
+            'pending_testimonials' => Testimonial::where('is_read', false)->count(),
+            'unread_messages'      => ContactMessage::where('is_read', false)->count(),
         ]);
     }
 
