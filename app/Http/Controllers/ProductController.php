@@ -174,6 +174,8 @@ class ProductController extends Controller
             }
         }
 
+        $updateData['sort_order'] ??= 0;
+
         if (array_key_exists('subcategory_id', $data)) {
             $updateData['subcategory_id'] = $data['subcategory_id'];
         }
