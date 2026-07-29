@@ -45,6 +45,13 @@ class SettingController extends Controller
         $data = $request->validate($rules);
 
         $setting->update($data);
+
+        \Log::info('Setting updated', [
+            'id'    => $id,
+            'key'   => $setting->key,
+            'value' => $data['value'] ?? '(not provided)',
+        ]);
+
         return response()->json($setting);
     }
 

@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\Permission;
 use App\Models\Setting;
 use App\Models\Hero;
+use App\Models\Faq;
 use App\Models\Admin;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -64,6 +65,16 @@ class RbacSeeder extends Seeder
             ['name' => 'Buat Hero', 'slug' => 'create_heroes', 'group' => 'heroes'],
             ['name' => 'Edit Hero', 'slug' => 'edit_heroes', 'group' => 'heroes'],
             ['name' => 'Hapus Hero', 'slug' => 'delete_heroes', 'group' => 'heroes'],
+
+            // Contact messages
+            ['name' => 'Lihat Pesan', 'slug' => 'view_messages', 'group' => 'messages'],
+            ['name' => 'Hapus Pesan', 'slug' => 'delete_messages', 'group' => 'messages'],
+
+            // FAQ
+            ['name' => 'Lihat FAQ', 'slug' => 'view_faqs', 'group' => 'faqs'],
+            ['name' => 'Buat FAQ', 'slug' => 'create_faqs', 'group' => 'faqs'],
+            ['name' => 'Edit FAQ', 'slug' => 'edit_faqs', 'group' => 'faqs'],
+            ['name' => 'Hapus FAQ', 'slug' => 'delete_faqs', 'group' => 'faqs'],
         ];
 
         foreach ($permissions as $p) {
@@ -259,6 +270,47 @@ class RbacSeeder extends Seeder
             );
         }
 
-        echo "RBAC, Settings, dan Heroes berhasil di-seed!\n";
+        // Default FAQs
+        $defaultFaqs = [
+            [
+                'question' => 'Apakah produk Rindang Cemara Sukses aman digunakan?',
+                'answer' => 'Ya, semua produk kami telah teruji secara dermatologis dan menggunakan material food-grade yang aman untuk kulit. Setiap produk juga memiliki nomor BPOM yang terdaftar.',
+                'sort_order' => 1,
+                'is_active' => true,
+            ],
+            [
+                'question' => 'Berapa lama garansi produk?',
+                'answer' => 'Setiap produk Rindang Cemara Sukses memiliki garansi 1 tahun untuk kerusakan produksi. Garansi tidak berlaku untuk kerusakan akibat penggunaan yang tidak sesuai petunjuk.',
+                'sort_order' => 2,
+                'is_active' => true,
+            ],
+            [
+                'question' => 'Bagaimana cara membersihkan alat kecantikan?',
+                'answer' => 'Bersihkan dengan kain lembut dan alkohol 70% setelah pemakaian. Jangan merendam bagian elektronik atau menggunakan bahan kimia keras. Simpan di tempat kering dan sejuk.',
+                'sort_order' => 3,
+                'is_active' => true,
+            ],
+            [
+                'question' => 'Apakah ada toko fisik?',
+                'answer' => 'Saat ini kami melayani penjualan secara online melalui website resmi dan marketplace partner. Kami akan segera membuka flagship store di beberapa kota besar.',
+                'sort_order' => 4,
+                'is_active' => true,
+            ],
+            [
+                'question' => 'Bagaimana cara pengembalian produk?',
+                'answer' => 'Hubungi customer service kami melalui WhatsApp dalam 7 hari setelah penerimaan produk untuk pengembalian atau penukaran. Pastikan produk dalam kondisi baik dan belum digunakan.',
+                'sort_order' => 5,
+                'is_active' => true,
+            ],
+        ];
+
+        foreach ($defaultFaqs as $f) {
+            Faq::firstOrCreate(
+                ['question' => $f['question']],
+                $f
+            );
+        }
+
+        echo "RBAC, Settings, Heroes, dan FAQ berhasil di-seed!\n";
     }
 }

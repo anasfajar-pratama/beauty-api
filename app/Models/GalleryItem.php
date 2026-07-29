@@ -9,7 +9,7 @@ class GalleryItem extends Model
 {
     use LogsActivity;
     protected $table    = 'gallery_items';
-    protected $fillable = ['image_url', 'alt_text', 'is_active', 'sort_order'];
+    protected $fillable = ['image_url', 'alt_text', 'is_active', 'sort_order', 'title', 'tagline', 'description'];
 
     public $timestamps = true;
 }

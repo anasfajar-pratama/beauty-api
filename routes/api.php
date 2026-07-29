@@ -15,6 +15,8 @@ use App\Http\Controllers\Admin\ActivityLogController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\HeroController;
+use App\Http\Controllers\ContactMessageController;
+use App\Http\Controllers\FaqController;
 
 Route::get('/settings', [SettingController::class, 'publicIndex']);
 Route::get('/subcategories', [SubcategoryController::class, 'publicIndex']);
@@ -30,6 +32,8 @@ Route::get('/legal-achievements', function () {
     return response()->json($setting ? json_decode($setting->value, true) : []);
 });
 Route::get('/heroes', [HeroController::class, 'publicIndex']);
+Route::post('/contact-messages', [ContactMessageController::class, 'store']);
+Route::get('/faqs', [FaqController::class, 'publicIndex']);
 
 Route::post('/admin/login', [AuthController::class, 'login']);
 Route::post('/admin/seed', [AuthController::class, 'seed']);
@@ -56,6 +60,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/admin/testimonials', [TestimonialController::class, 'index']);
     Route::post('/admin/testimonials', [TestimonialController::class, 'store']);
     Route::put('/admin/testimonials/{id}', [TestimonialController::class, 'update']);
+    Route::patch('/admin/testimonials/{id}/read', [TestimonialController::class, 'markRead']);
     Route::delete('/admin/testimonials/{id}', [TestimonialController::class, 'destroy']);
 
     Route::get('/admin/gallery', [GalleryController::class, 'index']);
@@ -96,4 +101,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/admin/heroes/{id}', [HeroController::class, 'update']);
     Route::delete('/admin/heroes/{id}', [HeroController::class, 'destroy']);
     Route::post('/admin/heroes/reorder', [HeroController::class, 'reorder']);
+
+    // Contact messages
+    Route::get('/admin/contact-messages', [ContactMessageController::class, 'index']);
+    Route::patch('/admin/contact-messages/{id}/read', [ContactMessageController::class, 'markRead']);
+    Route::delete('/admin/contact-messages/{id}', [ContactMessageController::class, 'destroy']);
+
+    // FAQ management
+    Route::get('/admin/faqs', [FaqController::class, 'index']);
+    Route::post('/admin/faqs', [FaqController::class, 'store']);
+    Route::put('/admin/faqs/{id}', [FaqController::class, 'update']);
+    Route::delete('/admin/faqs/{id}', [FaqController::class, 'destroy']);
+    Route::post('/admin/faqs/reorder', [FaqController::class, 'reorder']);
 });
